@@ -8,6 +8,8 @@ class MainWindow(QWidget):
         self.setWindowTitle("Dice roller")
         self.setGeometry(100, 100, 800, 600)
 
+        self.rolls = {}
+
         roll_button = QPushButton("Roll", clicked=self.roll_dice)
         mainLayout = QVBoxLayout()
         self.setLayout(mainLayout)
@@ -38,8 +40,11 @@ class MainWindow(QWidget):
             widget.deleteLater()
 
         for i in range(amount):
+            rolled = randint(1, sides)
+            if sides not in self.rolls:
+                self.rolls[sides] = []
+            self.rolls[sides].append(rolled)
             dice = QLabel()
-            dice.setText(str(randint(1, sides)))
             self.dice_box.addWidget(dice)
 
 
