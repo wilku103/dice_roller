@@ -1,39 +1,30 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QSpinBox, QLabel
 from random import randint
 
-class MainWindow(QWidget):
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow
+
+from ui_main_window import Ui_MainWindow
+
+
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.setWindowTitle("Dice roller")
-        self.setGeometry(100, 100, 800, 600)
+        self.MAX_GRID_COLS = 10
+
+        self.setupUi(self)
 
         self.rolls = {}
 
-        roll_button = QPushButton("Roll", clicked=self.roll_dice)
-        mainLayout = QVBoxLayout()
-        self.setLayout(mainLayout)
-
-        self.dice_box = QHBoxLayout()
-        mainLayout.addLayout(self.dice_box)
-
-        interfaceLayout = QHBoxLayout()
-        self.num_dice = QSpinBox(value=1)
-        self.dice_sides = QSpinBox(value=6)
-        interfaceLayout.addWidget(self.num_dice)
-        interfaceLayout.addWidget(self.dice_sides)
-        interfaceLayout.addWidget(roll_button)
-        mainLayout.addLayout(interfaceLayout)
-
+        self.roll_btn.clicked.connect(self.roll_dice)
 
         self.show()
-
 
     def roll_dice(self):
         amount = self.num_dice.value()
         sides = self.dice_sides.value()
 
-        #remove all widgets from self.dice_box
+        # remove all widgets from self.dice_box
         for i in reversed(range(self.dice_box.count())):
             widget = self.dice_box.itemAt(i).widget()
             widget.setParent(None)
@@ -44,8 +35,14 @@ class MainWindow(QWidget):
             if sides not in self.rolls:
                 self.rolls[sides] = []
             self.rolls[sides].append(rolled)
-            dice = QLabel()
-            self.dice_box.addWidget(dice)
+            dice = QLabel(str(rolled))
+            dice.setMaximumSize(50, 50)
+            dice.setStyleSheet("border: 2px solid gray; padding: 5px;")
+
+            row = i // self.MAX_GRID_COLS
+            col = i % self.MAX_GRID_COLS
+
+            self.dice_box.addWidget(dice, row, col, Qt.AlignmentFlag.AlignCenter)
 
 
 def main():
