@@ -25,11 +25,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         sides = self.dice_sides.value()
 
         # remove all widgets from self.dice_box
-        for i in reversed(range(self.dice_box.count())):
-            widget = self.dice_box.itemAt(i).widget()
-            widget.setParent(None)
-            widget.deleteLater()
-
+        while self.dice_box.count():
+            item = self.dice_box.takeAt(0)
+            if item is not None:
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
         for i in range(amount):
             rolled = randint(1, sides)
             if sides not in self.rolls:
