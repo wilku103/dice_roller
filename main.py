@@ -3,7 +3,7 @@ from random import randint
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow
 
-from ui_main_window import Ui_MainWindow
+from ui.main_window import Ui_MainWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -16,17 +16,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.rolls = {}
 
-        self.roll_btn.clicked.connect(self.roll_dice)
+        self.dice_page.roll_btn.clicked.connect(self.roll_dice)
 
         self.show()
 
     def roll_dice(self):
-        amount = self.num_dice.value()
-        sides = self.dice_sides.value()
+        amount = self.dice_page.num_dice.value()
+        sides = self.dice_page.dice_sides.value()
 
         # remove all widgets from self.dice_box
-        while self.dice_box.count():
-            item = self.dice_box.takeAt(0)
+        while self.dice_page.dice_box.count():
+            item = self.dice_page.dice_box.takeAt(0)
             if item is not None:
                 widget = item.widget()
                 if widget is not None:
@@ -43,16 +43,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             row = i // self.MAX_GRID_COLS
             col = i % self.MAX_GRID_COLS
 
-            self.dice_box.addWidget(dice, row, col, Qt.AlignmentFlag.AlignCenter)
+            self.dice_page.dice_box.addWidget(
+                dice, row, col, Qt.AlignmentFlag.AlignCenter
+            )
 
 
 def main():
     app = QApplication([])
 
-    window = MainWindow()
+    # needed to prevent garbage collection of the main window
+    _window = MainWindow()
 
     app.exec()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
