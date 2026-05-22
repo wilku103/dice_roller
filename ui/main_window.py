@@ -15,12 +15,14 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.dice_page = Ui_DicePage()
-        self.statistics_page = Ui_StatisticsPage()
+        self.statistics_page = Ui_StatisticsPage(MainWindow.rolls)
 
         self.dice_page.statistics_btn.clicked.connect(
             lambda: self.centralwidget.setCurrentWidget(self.statistics_page)
         )
-
+        self.statistics_page.rolls_btn.clicked.connect(
+            lambda: self.centralwidget.setCurrentWidget(self.dice_page)
+        )
         self.centralwidget.addWidget(self.dice_page)
         self.centralwidget.addWidget(self.statistics_page)
 

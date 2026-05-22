@@ -11,10 +11,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__(*args, **kwargs)
 
         self.MAX_GRID_COLS = 10
+        self.rolls = {}
 
         self.setupUi(self)
-
-        self.rolls = {}
 
         self.dice_page.roll_btn.clicked.connect(self.roll_dice)
 
