@@ -1,14 +1,29 @@
 from PyQt6 import QtCore
-from PyQt6.QtWidgets import (QHBoxLayout, QSpacerItem, QVBoxLayout, QWidget, QSizePolicy, QLabel, QGridLayout, QSpinBox,
-                             QPushButton)
+from PyQt6.QtWidgets import (
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QSizePolicy,
+    QSpacerItem,
+    QSpinBox,
+    QVBoxLayout,
+    QWidget,
+)
 
 
 class Ui_DicePage(QWidget):
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the DicePage class.
+        """
         super().__init__(*args, **kwargs)
         self.setupUi()
 
     def setupUi(self):
+        """
+        Set up the DicePage UI.
+        """
         self.verticalLayout_2 = QVBoxLayout(self)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.verticalLayout = QVBoxLayout()
@@ -55,6 +70,9 @@ class Ui_DicePage(QWidget):
         self.retranslateUi()
 
     def retranslateUi(self):
+        """
+        Set the text for the UI elements.
+        """
         _translate = QtCore.QCoreApplication.translate
         self.label.setText(_translate("MainWindow", "dice"))
         self.roll_btn.setText(_translate("MainWindow", "Roll"))

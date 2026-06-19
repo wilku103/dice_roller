@@ -14,11 +14,18 @@ from PyQt6.QtWidgets import (
 
 class Ui_StatisticsPage(QWidget):
     def __init__(self, rolls: dict = None, *args, **kwargs):
+        """
+        Initialize the StatisticsPage
+        :param rolls: shallow copy of apps rolls to be read
+        """
         super().__init__(*args, **kwargs)
         self.rolls = rolls if rolls is not None else {}
         self.setupUi()
 
     def setupUi(self):
+        """
+        Set up the StatisticsPage UI including graphs
+        """
         self.main_layout = QVBoxLayout(self)
         self.figure = Figure(figsize=(5, 4), dpi=100)
         self.canvas = FigureCanvas(self.figure)
@@ -47,6 +54,9 @@ class Ui_StatisticsPage(QWidget):
         self.main_layout.addLayout(self.interface_box)
 
     def update_freq_ax(self):
+        """
+        Calculate values and update the frequency graph
+        """
         ax = self.axes["freq"]
 
         counts, _ = np.histogram(self.rolls, bins=np.arange(1, 8) - 0.5)
@@ -65,6 +75,9 @@ class Ui_StatisticsPage(QWidget):
         ax.legend()
 
     def update_average_ax(self):
+        """
+        Calculate values and update the average graph
+        """
         ax = self.axes["avg"]
         avg = np.cumsum(self.rolls) / np.arange(1, len(self.rolls) + 1)
 
@@ -83,6 +96,9 @@ class Ui_StatisticsPage(QWidget):
         ax.legend()
 
     def update_luck_ax(self):
+        """
+        Calculate values and update the luck frequency graph
+        """
         ax = self.axes["luck"]
         luck = {
             "high": len([x for x in self.rolls if x >= 4]) / len(self.rolls),
@@ -101,6 +117,9 @@ class Ui_StatisticsPage(QWidget):
         ax.legend()
 
     def update_parity_ax(self):
+        """
+        Calculate values and update the parity frequency graph
+        """
         ax = self.axes["parity"]
 
         parity = {
@@ -120,6 +139,11 @@ class Ui_StatisticsPage(QWidget):
         ax.legend()
 
     def showEvent(self, _):
+        """
+        Update all graphs and texts on entering statistics page
+        :param _: Unused type of event, required by the method signature
+        :return:
+        """
         for ax in self.axes.values():
             ax.clear()
 

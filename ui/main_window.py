@@ -7,6 +7,10 @@ from ui.statistics_page import Ui_StatisticsPage
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        """
+        Set up the MainWindow UI, including the central widget and the two pages (dice and statistics).
+        :param MainWindow: The actual instance of the MainWindow class to set up the UI for.
+        """
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
 
@@ -29,5 +33,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
     def retranslateUi(self, MainWindow):
+        """
+        Set the text for the UI elements.
+        """
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Dice roller"))
