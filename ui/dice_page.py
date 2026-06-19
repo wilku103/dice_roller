@@ -23,25 +23,22 @@ class Ui_DicePage(QtWidgets.QWidget):
         self.verticalLayout.addItem(spacerItem)
         self.interface_box = QtWidgets.QHBoxLayout()
         self.interface_box.setObjectName("interface_box")
+
         self.num_dice = QtWidgets.QSpinBox(parent=self)
         self.num_dice.setMinimum(1)
+        self.num_dice.setMaximum(200)
         self.num_dice.setObjectName("num_dice")
         self.interface_box.addWidget(self.num_dice)
         self.label = QtWidgets.QLabel(parent=self)
         self.label.setObjectName("label")
         self.interface_box.addWidget(self.label)
-        self.dice_sides = QtWidgets.QSpinBox(parent=self)
-        self.dice_sides.setMinimum(1)
-        self.dice_sides.setProperty("value", 6)
-        self.dice_sides.setObjectName("dice_sides")
-        self.interface_box.addWidget(self.dice_sides)
-        self.label_2 = QtWidgets.QLabel(parent=self)
-        self.label_2.setObjectName("label_2")
-        self.interface_box.addWidget(self.label_2)
+
         self.roll_btn = QtWidgets.QPushButton(parent=self)
         self.roll_btn.setObjectName("roll_btn")
+
         self.statistics_btn = QtWidgets.QPushButton(parent=self)
         self.statistics_btn.setObjectName("statistics_btn")
+
         self.interface_box.addWidget(self.roll_btn)
         self.interface_box.addWidget(self.statistics_btn)
         self.verticalLayout.addLayout(self.interface_box)
@@ -52,6 +49,5 @@ class Ui_DicePage(QtWidgets.QWidget):
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.label.setText(_translate("MainWindow", "dice"))
-        self.label_2.setText(_translate("MainWindow", "sided"))
         self.roll_btn.setText(_translate("MainWindow", "Roll"))
         self.statistics_btn.setText(_translate("MainWindow", "Statistics"))

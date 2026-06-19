@@ -11,17 +11,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__(*args, **kwargs)
 
         self.MAX_GRID_COLS = 10
-        self.rolls = {}
+        self.rolls = []
 
         self.setupUi(self)
 
         self.dice_page.roll_btn.clicked.connect(self.roll_dice)
+        self.statistics_page.reset_btn.clicked.connect(self.reset)
 
         self.show()
 
     def roll_dice(self):
         amount = self.dice_page.num_dice.value()
-        sides = self.dice_page.dice_sides.value()
 
         # remove all widgets from self.dice_box
         while self.dice_page.dice_box.count():
@@ -30,11 +30,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 widget = item.widget()
                 if widget is not None:
                     widget.deleteLater()
+
         for i in range(amount):
-            rolled = randint(1, sides)
-            if sides not in self.rolls:
-                self.rolls[sides] = []
-            self.rolls[sides].append(rolled)
+            rolled = randint(1, 6)
+            self.rolls.append(rolled)
+
             dice = QLabel(str(rolled))
             dice.setMaximumSize(50, 50)
             dice.setStyleSheet("border: 2px solid gray; padding: 5px;")
@@ -45,6 +45,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.dice_page.dice_box.addWidget(
                 dice, row, col, Qt.AlignmentFlag.AlignCenter
             )
+
+    def reset(self):
+        self.rolls.clear()
+        self.statistics_page.showEvent(None)  # update the page
 
 
 def main():
