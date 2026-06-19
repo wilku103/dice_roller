@@ -16,6 +16,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.dice_page.roll_btn.clicked.connect(self.roll_dice)
+        self.dice_page.save_btn.clicked.connect(self.save_rolls)
         self.statistics_page.reset_btn.clicked.connect(self.reset)
 
         self.show()
@@ -49,6 +50,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def reset(self):
         self.rolls.clear()
         self.statistics_page.showEvent(None)  # update the page
+
+    def save_rolls(self):
+        with open("rolls.txt", "w") as file:
+            for roll in self.rolls:
+                file.write(str(roll) + "\n")
 
 
 def main():
